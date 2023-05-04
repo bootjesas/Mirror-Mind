@@ -6,9 +6,7 @@ export default function MyApp({ Component, pageProps }) {
     <>
       <Component {...pageProps} />
       <div className="footer">
-        <p>
-          <Link href="/">Text</Link>
-          <Link href="/art">Art</Link>
+        <p>made by Bo And Jarne 
         </p>
       </div>
     </>
