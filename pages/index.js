@@ -62,14 +62,10 @@ export default function MyPage() {
 
   let animationInterval = null;
   function onLoadImage() {
-  
-
-
-      
-      startAnimation();
+      drawImage();
     }
-  
-    function startAnimation() {
+
+    function drawImage() {
       const canvas = canvasRef.current;
       const img = imgRef.current;
       const ctx = canvas.getContext("2d");
@@ -82,6 +78,9 @@ export default function MyPage() {
         // Teken de afbeelding op canvas2
         ctx.drawImage(img, 0, 0, 800, 600, 0, 0, 800, 600);
         canvas.style.display = "block"; // maak #canvas2 zichtbaar
+    }
+      function startAnimation() {
+      
       // Handmatig invoeren van de coördinaten van de rechthoek
       const x = 220;
       const y = 315;
@@ -93,6 +92,9 @@ export default function MyPage() {
       let direction = "omhoog";
 
       animationInterval = setInterval(() => {
+        const canvas = canvasRef.current;
+      const img = imgRef.current;
+      const ctx = canvas.getContext("2d");
         // Teken een deel van de afbeelding in de rechthoek
         ctx.clearRect(x, y, width, height);
         ctx.drawImage(
@@ -125,6 +127,7 @@ export default function MyPage() {
     }
 
   async function handleSubmit(transcript) {
+    console.log(transcript)
     setIsLoading(true);
     console.log(transcript);
     const response = await fetch("/api/get-answer", {
@@ -142,12 +145,15 @@ export default function MyPage() {
     setIsLoading(false);
 
     // Use the Web Speech API to speak the answer out loud with a scary voice
-    const utterance = new SpeechSynthesisUtterance(answer);
-    utterance.pitch = 0.5; // Low pitch
-    utterance.rate = 0.8; // Slow speed
-    utterance.volume = 1; // Loud volume
-    utterance.voice = speechSynthesis.getVoices().find((voice) => voice.name === "Whisper"); // Find the "Whisper" voice
-    speechSynthesis.speak(utterance);
+   // Use the Web Speech API to speak the answer out loud with a normal voice
+   const utterance = new SpeechSynthesisUtterance(answer);
+   utterance.pitch = 1; // Normal pitch
+   utterance.rate = 1; // Normal speed
+   utterance.volume = 1; // Loud volume
+   speechSynthesis.speak(utterance);
+   
+
+    startAnimation();
   }
 
   function handleChange(e) {
