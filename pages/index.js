@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { transcript } from "./transcript";
 import Image from "next/image";
 import styles from '../styles/Home.module.css';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+
 
 export let answer = "";
 
@@ -15,6 +17,7 @@ export default function MyPage() {
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [imageCount, setImageCount] = useState(0);
 
   const canvasRef = useRef(null);
   const imgRef = useRef(null);
@@ -22,37 +25,63 @@ export default function MyPage() {
   console.log('hallao')
 
   useEffect(()=> {
-    // Create WebSocket connection.
-    const socket = new WebSocket("ws://localhost:8080");
+    //const WebSocket = require('ws')
+    function wsConnect() {
+      console.log("wsConnect");
+      let ws = new W3CWebSocket('ws://192.168.100.1:1880/speak');
+    
+      ws.onmessage = function (msg) {
+        console.log(msg)
+        console.log(msg.data);
+        if (msg.data === 'capture') {
+          setImageCount(imageCount+1)
+          window.location.reload();
+        } else if (msg.data === 'speak') {
+          handleSpeech();
+        }
+      }
 
-    // Connection opened
-    socket.addEventListener("open", (event) => {
-      socket.send("Hello Server!");
-    });
+      ws.onopen = function () {
+        console.log("Connected");
+      }
 
-    // Listen for messages
-    socket.addEventListener("message", (event) => {
-      console.log("Message from server ", event.data);
-      // if event msg is bepaalde knop
-      // handleSpeech()
-    });
+      ws.onclose = function () {
+        setTimeout(wsConnect, 3000);
+      }
+
+      ws.disconnect = function () {
+        console.log("Disconnected");
+      }
+  
+  }
+
+  wsConnect();
 
   }, [])
 
+
+  let animationInterval = null;
   function onLoadImage() {
-    const canvas = canvasRef.current;
-    const img = imgRef.current;
+  
 
-    canvas.width = 800;
-    canvas.height = 600;
 
-      console.log('aaa')
+      
+      startAnimation();
+    }
+  
+    function startAnimation() {
+      const canvas = canvasRef.current;
+      const img = imgRef.current;
       const ctx = canvas.getContext("2d");
-      console.log(img);
-      // Teken de afbeelding op canvas2
-      ctx.drawImage(img, 0, 0, 800, 600, 0, 0, 800, 600);
-      canvas.style.display = "block"; // maak #canvas2 zichtbaar
-
+  
+      canvas.width = 800;
+      canvas.height = 600;
+  
+        console.log('aaa')
+        console.log(img);
+        // Teken de afbeelding op canvas2
+        ctx.drawImage(img, 0, 0, 800, 600, 0, 0, 800, 600);
+        canvas.style.display = "block"; // maak #canvas2 zichtbaar
       // Handmatig invoeren van de coördinaten van de rechthoek
       const x = 220;
       const y = 315;
@@ -62,7 +91,8 @@ export default function MyPage() {
       // Animatie van de uitgesneden rechthoek
       let offset = 0;
       let direction = "omhoog";
-      setInterval(() => {
+
+      animationInterval = setInterval(() => {
         // Teken een deel van de afbeelding in de rechthoek
         ctx.clearRect(x, y, width, height);
         ctx.drawImage(
@@ -89,6 +119,9 @@ export default function MyPage() {
           }
         }
       }, 50);
+    }
+    function stopAnimation() {
+      clearInterval(animationInterval)
     }
 
   async function handleSubmit(transcript) {
@@ -149,7 +182,7 @@ export default function MyPage() {
       {isLoading && <div className="loading-spinner"></div>}
 
       <div className="answer-area">{answer}</div>
-      <Image className={styles.image} src="/captured-image.png" ref={imgRef} onLoad={onLoadImage} width={900} height={700}/>
+      <Image className={styles.image} src={"/captured-image.png?cache=" +Date.now()} ref={imgRef} onLoad={onLoadImage} width={1200} height={900}/>
      
 
     
