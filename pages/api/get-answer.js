@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   if (typeof req.body.prompt === "string") {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: `${req.body.prompt} `,
+      prompt: `${req.body.prompt} lief `,
       temperature: 0,
       max_tokens: 1000
     })

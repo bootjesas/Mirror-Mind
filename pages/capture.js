@@ -133,14 +133,17 @@ wsConnect();
   return (
     <div className={styles.cameraContainer}>
       <div className={showingFeedback ? styles.videoHidden : styles.videoShow}>
-        <video className={styles.video} ref={videoRef} autoPlay></video>
+        <div className={styles.overlayContainer}>
+          <video className={styles.video} ref={videoRef} autoPlay></video>
+          <div className={styles.overlay}></div>
+        </div>
         <button id="capture-btn" ref={captureButtonRef} onClick={handleCaptureButtonClick}>Capture</button>
         {countdown !== null && <div className={styles.countdown}>{countdown}</div>}
       </div>
       <div className={showingFeedback ? styles.canvas : styles.canvasHidden }>
          <canvas id="canvas" width={800} height={600} ref={canvasRef}></canvas>
       </div>
-     
     </div>
   );
+  
 }
