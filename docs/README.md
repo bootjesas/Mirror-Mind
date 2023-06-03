@@ -7,6 +7,10 @@ De Mirror Mind-installatie is gebaseerd op dit concept en stelt je in staat om m
 Het visuele aspect is ook van groot belang in dit concept. Je ziet jezelf in de spiegel en ziet je mond bewegen terwijl het antwoord wordt gegeven en voorgelezen. Dit creëert een totaalervaring waarin je innerlijke rust kunt vinden door in contact te komen met jezelf. Het algemene doel van Mirror Mind is om een positieve invloed op je mentale toestand te hebben door zelfreflectie, zelfbegeleiding en het stimuleren van nieuwe gedachten en perspectieven.
 
 
+https://github.com/bootjesas/Mirror-Mind/assets/118461271/abae99fe-04e0-494d-b44c-2d5157c172fe
+
+
+
 ## Instructies 
 
 ### benodigdheden: 
@@ -85,7 +89,7 @@ ws.onmessage = function (msg) {
 
 Dit fragment behandelt het onmessage-event van de WebSocket. Wanneer er een bericht binnenkomt, wordt de ontvangen boodschap (msg) gelogd. Vervolgens wordt de data van het bericht gelogd. Als de data gelijk is aan 'capture', wordt de imageCount verhoogd met 1 door setImageCount(imageCount+1) aan te roepen. Daarna wordt de pagina herladen met window.location.reload(). Als de data gelijk is aan 'speak', wordt de functie handleSpeech() aangeroepen.
 
-//
+```javascript
 function drawImage() {
   const canvas = canvasRef.current;
   const img = imgRef.current;
@@ -99,12 +103,13 @@ function drawImage() {
   // Teken de afbeelding op canvas2
   ctx.drawImage(img, 0, 0, 800, 600, 0, 0, 800, 600);
   canvas.style.display = "block"; // maak #canvas2 zichtbaar}
+  ```
 
 
 Deze functie, drawImage, wordt gebruikt om een afbeelding op het canvas te tekenen. Het krijgt toegang tot het canvas-element (canvasRef.current), het img-element (imgRef.current) en de canvas-context (ctx). Vervolgens wordt de breedte en hoogte van het canvas ingesteld op 800x600 pixels. Daarna wordt de afbeelding getekend op het canvas met behulp van de drawImage-methode van de canvas-context. De afbeelding wordt getekend op de coördinaten (0, 0) van het canvas en wordt geschaald naar een grootte van 800x600 pixels.
 
 
-//
+```javascript
 const startCountdown = () => {
     let timer = 5;
     setCountdown(timer);
@@ -124,7 +129,7 @@ const handleCaptureButtonClick = () => {
 
 Na een druk op de knop wordt er een countdown gestart die van 5 naar 0 gaat.
 
-//
+```javascript
 const startCountdown = () => {
     let timer = 5;
     setCountdown(timer);
@@ -138,10 +143,10 @@ const startCountdown = () => {
       }
     }, 1000);
   }
-
+```
 Als de timer 0 bereikt wordt er een foto gemaakt.
 
-//
+```javascript 
 const capture = () => {
     // Maak de canvaselementen even groot als de videoresolutie
     canvasRef.current.width = videoRef.current.videoWidth;
@@ -174,9 +179,94 @@ const capture = () => {
       setShowingFeedback(false);
     },10000);
   }
+  
 
   In dit stuk wordt de foto visueel gemaakt en worden de afbeeldingsgegevens doorgestuurd. Na 10 seconden verdwijnt de foto zodat er weer een nieuwe gemaakt kan worden.
+  
+  
+  ```javascript
+  useEffect(()=> {
+    console.log("useeffect");
+    //const WebSocket = require('ws')
+      function wsConnect() {
+      console.log("wsConnect");
+      ws = new W3CWebSocket('ws://192.168.100.1:1880/websocket');
+    
+      ws.onmessage = function (msg) {
+        if (msg.data === "startCountdown") {
+          startCountdown();
+          console.log(msg);
+          ws.send("capture");
+        }
+      }
 
+      ws.onopen = function () {
+        console.log("Connected");
+      }
+
+      ws.onclose = function () {
+        setTimeout(wsConnect, 3000);
+      }
+
+      ws.disconnect = function () {
+        console.log("Disconnected");
+      }      
+}
+
+wsConnect();
+```
+
+Hier wordt er een websocket aangemaakt die er voor zorgt dat er real-time berichten kunnen verstuurd of ontvangen worden. Zo kan de afbeelding worden verzonden via een externe server.
+
+```javascript
+function startAnimation() {
+      
+      // Handmatig invoeren van de coördinaten van de rechthoek
+      const x = 220;
+      const y = 315;
+      const width = 200;
+      const height = 140;
+
+      // Animatie van de uitgesneden rechthoek
+      let offset = 0;
+      let direction = "omhoog";
+
+      animationInterval = setInterval(() => {
+        const canvas = canvasRef.current;
+      const img = imgRef.current;
+      const ctx = canvas.getContext("2d");
+        // Teken een deel van de afbeelding in de rechthoek
+        ctx.clearRect(x, y, width, height);
+        ctx.drawImage(
+          img,
+          x,
+          y + offset,
+          width,
+          height, // broncoördinaten
+          x,
+          y,
+          width,
+          height // doelcoördinaten
+        );
+        // Pas de offset aan om de positie van de tekening te veranderen
+        if (direction === "omhoog") {
+          offset = offset - 1;
+          if (offset < -7) {
+            direction = "omlaag";
+          }
+        } else {
+          offset = offset + 1;
+          if (offset > 0) {
+            direction = "omhoog";
+          }
+        }
+      }, 50);
+    }
+    function stopAnimation() {
+      clearInterval(animationInterval)
+    }
+```
+Deze code laat een knipsel van de mond op en neer bewegen.
 
 
 ## houtconstructies 
