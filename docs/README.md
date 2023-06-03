@@ -179,7 +179,7 @@ const capture = () => {
       setShowingFeedback(false);
     },10000);
   }
-  
+  ```
 
   In dit stuk wordt de foto visueel gemaakt en worden de afbeeldingsgegevens doorgestuurd. Na 10 seconden verdwijnt de foto zodat er weer een nieuwe gemaakt kan worden.
   
