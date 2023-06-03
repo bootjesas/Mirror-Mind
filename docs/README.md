@@ -72,8 +72,22 @@ Met deze stappen zou je code compleet moeten zijn.
 
 ![Nod-Red refresh](refresh.png)
 
-## uitleg code  
 
+## instaleren 
+### zeker niet vergeten 
+Voer 'npm install ' uit in je terminal om de modules te instaleren.
+
+gebruik `npm run dev` om lokaal @ `localhost:3000` te hosten. Of gebruik `npm run build` en vervolgens `npm run start` om een voorbeeld van de openbare build te bekijken. Ga naar een gratis Vercel-account om het te hosten en met de wereld te delen.
+
+Maak een API key aan via de site [API KEY](https://platform.openai.com/account/api-keys) en plaats deze in de env folder 
+!! LET OP !! zorg dat deze API key nooit online komt.
+<img width="1440" alt="Scherm­afbeelding 2023-06-03 om 13 45 43" src="https://github.com/bootjesas/Mirror-Mind/assets/118461271/d3b7dd8e-57d7-4c55-b244-c382c45f1b69">
+
+
+
+
+## uitleg code  
+### Websocket 
 ```javascript
 ws.onmessage = function (msg) {
   console.log(msg)
@@ -89,6 +103,7 @@ ws.onmessage = function (msg) {
 
 Dit fragment behandelt het onmessage-event van de WebSocket. Wanneer er een bericht binnenkomt, wordt de ontvangen boodschap (msg) gelogd. Vervolgens wordt de data van het bericht gelogd. Als de data gelijk is aan 'capture', wordt de imageCount verhoogd met 1 door setImageCount(imageCount+1) aan te roepen. Daarna wordt de pagina herladen met window.location.reload(). Als de data gelijk is aan 'speak', wordt de functie handleSpeech() aangeroepen.
 
+### Image
 ```javascript
 function drawImage() {
   const canvas = canvasRef.current;
@@ -108,7 +123,7 @@ function drawImage() {
 
 Deze functie, drawImage, wordt gebruikt om een afbeelding op het canvas te tekenen. Het krijgt toegang tot het canvas-element (canvasRef.current), het img-element (imgRef.current) en de canvas-context (ctx). Vervolgens wordt de breedte en hoogte van het canvas ingesteld op 800x600 pixels. Daarna wordt de afbeelding getekend op het canvas met behulp van de drawImage-methode van de canvas-context. De afbeelding wordt getekend op de coördinaten (0, 0) van het canvas en wordt geschaald naar een grootte van 800x600 pixels.
 
-
+### Countdown
 ```javascript
 const startCountdown = () => {
     let timer = 5;
@@ -126,8 +141,10 @@ const startCountdown = () => {
 const handleCaptureButtonClick = () => {
     startCountdown();
   }
-
+```
 Na een druk op de knop wordt er een countdown gestart die van 5 naar 0 gaat.
+
+### Capture
 
 ```javascript
 const startCountdown = () => {
@@ -145,6 +162,9 @@ const startCountdown = () => {
   }
 ```
 Als de timer 0 bereikt wordt er een foto gemaakt.
+
+
+### Doorsturen 
 
 ```javascript 
 const capture = () => {
@@ -184,6 +204,7 @@ const capture = () => {
   In dit stuk wordt de foto visueel gemaakt en worden de afbeeldingsgegevens doorgestuurd. Na 10 seconden verdwijnt de foto zodat er weer een nieuwe gemaakt kan worden.
   
   
+  ### Websocket doorsturen
   ```javascript
   useEffect(()=> {
     console.log("useeffect");
@@ -218,6 +239,7 @@ wsConnect();
 
 Hier wordt er een websocket aangemaakt die er voor zorgt dat er real-time berichten kunnen verstuurd of ontvangen worden. Zo kan de afbeelding worden verzonden via een externe server.
 
+### Annimatie
 ```javascript
 function startAnimation() {
       
@@ -268,9 +290,45 @@ function startAnimation() {
 ```
 Deze code laat een knipsel van de mond op en neer bewegen.
 
+### spraak
+```javascript 
+async function handleSubmit(transcript) {
+    console.log(transcript)
+    setIsLoading(true);
+    console.log(transcript);
+    const response = await fetch("/api/get-answer", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ prompt: transcript })
+    });
+    const data = await response.json();
+    answer = data.text.trim();
+    const translatedAnswer = await translateToDutch(answer);
+    answer = translatedAnswer;
+    setIsLoading(false);
 
-## houtconstructies 
-![Instala![constuctie](https://github.com/bootjesas/Mirror-Mind/assets/118461271/06d9001f-aa66-449a-ba7a-c680dc3b2ff1)
+    // Use the Web Speech API to speak the answer out loud with a scary voice
+   // Use the Web Speech API to speak the answer out loud with a normal voice
+   const utterance = new SpeechSynthesisUtterance(answer);
+   utterance.pitch = 1; // Normal pitch
+   utterance.rate = 1; // Normal speed
+   utterance.volume = 1; // Loud volume
+   speechSynthesis.speak(utterance);
+   
+
+    startAnimation();
+  }
+  ```
+Hier wordt wordt de spraak toegevoegd en worden er instellingen voor de stem meegegeven. Zodra de speech start, wordt ook de animatie van de mond gestart.
+
+
+
+
+# houtconstructies 
+![constuctie](https://github.com/bootjesas/Mirror-Mind/assets/118461271/06d9001f-aa66-449a-ba7a-c680dc3b2ff1)
 
 
 ### OPBOUW
