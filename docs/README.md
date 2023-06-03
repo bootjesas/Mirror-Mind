@@ -70,7 +70,8 @@ Met deze stappen zou je code compleet moeten zijn.
 
 ## uitleg code  
 
-//ws.onmessage = function (msg) {
+```javascript
+ws.onmessage = function (msg) {
   console.log(msg)
   console.log(msg.data);
   if (msg.data === 'capture') {
@@ -80,10 +81,12 @@ Met deze stappen zou je code compleet moeten zijn.
     handleSpeech();
   }
 }
+```
 
 Dit fragment behandelt het onmessage-event van de WebSocket. Wanneer er een bericht binnenkomt, wordt de ontvangen boodschap (msg) gelogd. Vervolgens wordt de data van het bericht gelogd. Als de data gelijk is aan 'capture', wordt de imageCount verhoogd met 1 door setImageCount(imageCount+1) aan te roepen. Daarna wordt de pagina herladen met window.location.reload(). Als de data gelijk is aan 'speak', wordt de functie handleSpeech() aangeroepen.
 
-//function drawImage() {
+//
+function drawImage() {
   const canvas = canvasRef.current;
   const img = imgRef.current;
   const ctx = canvas.getContext("2d");
@@ -101,7 +104,8 @@ Dit fragment behandelt het onmessage-event van de WebSocket. Wanneer er een beri
 Deze functie, drawImage, wordt gebruikt om een afbeelding op het canvas te tekenen. Het krijgt toegang tot het canvas-element (canvasRef.current), het img-element (imgRef.current) en de canvas-context (ctx). Vervolgens wordt de breedte en hoogte van het canvas ingesteld op 800x600 pixels. Daarna wordt de afbeelding getekend op het canvas met behulp van de drawImage-methode van de canvas-context. De afbeelding wordt getekend op de coördinaten (0, 0) van het canvas en wordt geschaald naar een grootte van 800x600 pixels.
 
 
-//const startCountdown = () => {
+//
+const startCountdown = () => {
     let timer = 5;
     setCountdown(timer);
 
@@ -120,7 +124,8 @@ const handleCaptureButtonClick = () => {
 
 Na een druk op de knop wordt er een countdown gestart die van 5 naar 0 gaat.
 
-//const startCountdown = () => {
+//
+const startCountdown = () => {
     let timer = 5;
     setCountdown(timer);
 
@@ -136,7 +141,8 @@ Na een druk op de knop wordt er een countdown gestart die van 5 naar 0 gaat.
 
 Als de timer 0 bereikt wordt er een foto gemaakt.
 
-//const capture = () => {
+//
+const capture = () => {
     // Maak de canvaselementen even groot als de videoresolutie
     canvasRef.current.width = videoRef.current.videoWidth;
     canvasRef.current.height = videoRef.current.videoHeight;
@@ -174,16 +180,17 @@ Als de timer 0 bereikt wordt er een foto gemaakt.
 
 
 ## houtconstructies 
-![Instalatie](constuctie.jpg)
+![Instala![constuctie](https://github.com/bootjesas/Mirror-Mind/assets/118461271/06d9001f-aa66-449a-ba7a-c680dc3b2ff1)
+
 
 ### OPBOUW
 
 Vorm vier kaders van 110 cm bij 210 cm, twee kaders van 90 cm bij 210 cm, één kader van 100 cm bij 210 cm (D) en één kader van 160 cm bij 210 cm (E). Plaats scharnieren tussen twee van de kaders van 110 cm bij 210 cm (A). Herhaal dit voor de andere twee van dit formaat (B) en voor de kaders van 90 cm bij 210 cm (C). Bevestig twee balken van 200 cm aan elkaar met een scharnier voor het dak, en herhaal dit nog een keer.Schroef de kaders A vast aan kader D en de kaders B en E aan C. Plaats een tafel in de inham van de kaders A en D en bevestig hier een kartonvel van 220 cm bij 210 cm tegenaan. Snij een gat op hoofdhoogte en daaronder een gat op maat van een drukknop in het grote kartonvel. Vouw de lange balken van 200 cm open en plaats ze bovenop de constructie. Bedek de gehele constructie met tuidoeken om het volledig te verduisteren.
 
-![Opbouw](schetsen.jpg)
+![Schetsen](https://github.com/bootjesas/Mirror-Mind/assets/118461271/a81d37c9-015b-40e1-9195-e8a57d48861b)
 
 
 ### INDELING
 Plaats een groot scherm en een houten paaltje in de grote ruimte. Voorzie een gat in het paaltje op maat van een drukknop. Plaats een monitor en een webcam in de kleine ruimte en zorg ervoor dat de webcam op de hoogte van het gat in het karton staat.Voorzie een tafel achter de constructie waar alle elektronica naartoe wordt geleid en gekoppeld aan de Raspberry Pi. Bevestig een microfoon aan het plafond voor het grote scherm.
 
-![Instalatie](constuctie.jpg)
+![IMG_1209](https://github.com/bootjesas/Mirror-Mind/assets/118461271/2c708655-b780-4a41-8404-abc633c37897)
