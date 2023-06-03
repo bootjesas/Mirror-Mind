@@ -136,6 +136,40 @@ Na een druk op de knop wordt er een countdown gestart die van 5 naar 0 gaat.
 
 Als de timer 0 bereikt wordt er een foto gemaakt.
 
+//const capture = () => {
+    // Maak de canvaselementen even groot als de videoresolutie
+    canvasRef.current.width = videoRef.current.videoWidth;
+    canvasRef.current.height = videoRef.current.videoHeight;
+    // Teken de video op het canvas
+    canvasRef.current.getContext('2d').drawImage(videoRef.current, 0, 0);
+
+
+ 
+    setShowingFeedback(true);
+    setCountdown(null);
+
+    // save image
+    const dataUrl = canvasRef.current.toDataURL('image/png');
+    fetch('/api/save-image', {
+        method: 'POST',
+        body: JSON.stringify({ image: dataUrl }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          //socket.send("capture");
+          console.log(data)
+        })
+        .catch(error => console.error(error));
+
+    setTimeout(()=> {
+      setShowingFeedback(false);
+    },10000);
+  }
+
+  In dit stuk wordt de foto visueel gemaakt en worden de afbeeldingsgegevens doorgestuurd. Na 10 seconden verdwijnt de foto zodat er weer een nieuwe gemaakt kan worden.
 
 
 
