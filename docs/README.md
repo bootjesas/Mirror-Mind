@@ -28,7 +28,7 @@ https://github.com/bootjesas/Mirror-Mind/assets/118461271/abae99fe-04e0-494d-b44
 
 #### Stap 1: Starten van de GitHub-code van LearnWebCode
 
-Om te beginnen, kun je de GitHub-code van LearnWebCode gebruiken als basis voor je project. Je kunt de code vinden op de volgende link: LearnWebCode GitHub.
+Om te beginnen, kun je de GitHub-code van LearnWebCode gebruiken als basis voor je project. Je kunt de code vinden op de volgende link: [basis code](https://github.com/LearnWebCode/gpt-nextjs-example).
 Zorg ervoor dat je een API-sleutel van DALL·E hebt, aangezien je hiermee API-verzoeken kunt doen voor de tekst-naar-afbeeldingfunctionaliteit. Houd er rekening mee dat dit een betaalde service is en dat je mogelijk moet betalen voor het gebruik ervan.
 
 #### Stap 2: Taalinstellingen wijzigen en automatisch antwoord genereren
