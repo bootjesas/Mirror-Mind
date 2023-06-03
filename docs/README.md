@@ -7,8 +7,10 @@ De Mirror Mind-installatie is gebaseerd op dit concept en stelt je in staat om m
 Het visuele aspect is ook van groot belang in dit concept. Je ziet jezelf in de spiegel en ziet je mond bewegen terwijl het antwoord wordt gegeven en voorgelezen. Dit creëert een totaalervaring waarin je innerlijke rust kunt vinden door in contact te komen met jezelf. Het algemene doel van Mirror Mind is om een positieve invloed op je mentale toestand te hebben door zelfreflectie, zelfbegeleiding en het stimuleren van nieuwe gedachten en perspectieven.
 
 
-https://github.com/bootjesas/Mirror-Mind/assets/118461271/abae99fe-04e0-494d-b44c-2d5157c172fe
 
+
+![Mirrormind](https://github.com/bootjesas/Mirror-Mind/assets/118461271/6db863f8-21fe-4665-85be-c37403b4a228)
+[Click to watch](https://www.youtube.com/watch?v=VMO94zE-rz8)
 
 
 ## Instructies 
